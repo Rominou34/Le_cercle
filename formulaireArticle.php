@@ -11,7 +11,7 @@ if(isset($_GET['envoi'])) {
     $lien_photo = NULL;
 
     // Verifie si l'image est valide
-    $target_dir = "img/";
+    $target_dir = "img/img_articles/";
     $target_file = $target_dir . basename($_FILES["photo"]["name"]);
     $uploadOk = 1;
     $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);

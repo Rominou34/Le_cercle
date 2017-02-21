@@ -1,8 +1,8 @@
 
-<link rel=stylesheet type="text/css" href="style.css">
+<link rel=stylesheet type="text/css" href="css/style.css">
 
 <?php
-  require ('Article.php');
+  require ('PierrBack/Article.php');
 
   if(isset($_GET['url'])) {
     $url = $_GET['url'];
@@ -16,8 +16,12 @@
 <h1>
   <?php echo($article->getTitre()); ?>
 </h1>
+<h2>
+  <?php echo($article->getSousTitre()); ?>
+</h2>
 <p>
   <?php echo($article->getTexte()); ?>
 </p>
-<img src="<?php echo($article->getPhoto()); ?>"/>
+<img class="img-article" src="img/img_articles/<?php echo($article->getImage()); ?>"/>
+<iframe width="560" height="315" src="<?php echo($article->getVideo()); ?>" frameborder="0" allowfullscreen></iframe>
 </div>

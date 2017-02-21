@@ -34,6 +34,23 @@ class DB {
 		return $req->fetchAll(PDO::FETCH_OBJ);
 	}
 
+	public function queryClass($sql, $data = array(), $class){
+		$req = $this->bdd->prepare($sql);
+		$req->execute($data);
+		$req->setFetchMode(PDO::FETCH_CLASS, $class);
+		return $req->fetch();
+	}
+
+	public function queryCreate($sql, $data = array()){
+		try {
+			$req = $this->bdd->prepare($sql);
+			$req->execute($data);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
+		return "Article publié avec succès";
+	}
+
 	public function queryOne($sql, $data = array()){
 		$req = $this->bdd->prepare($sql);
 		$req->execute($data);

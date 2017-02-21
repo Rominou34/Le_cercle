@@ -1,7 +1,50 @@
 <?php
 session_start();
-require 'db.class.php';
-$bdd = new DB();
+
+require('Article.php');
+
+// Lorsque le formulaire a ete envoye
+if(isset($_GET['envoi'])) {
+  try {
+    $titre = $_POST['titre'];
+    $soustitre = $_POST['soustitre'];
+    $texte = $_POST['texte'];
+    $lien_photo = NULL;
+    $video = $_POST['video'];
+
+    // Verifie si l'image est valide
+    $target_dir = "../img/img_articles/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $image_name = basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if($check !== false) {
+        //echo "File is an image - " . $check["mime"] . "\n";
+        $lien_photo = $image_name;
+        $uploadOk = 1;
+    } else {
+        echo "Le fichier n'est pas une image.";
+        $uploadOk = 0;
+    }
+
+    // Upload de l'image
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+        //echo "Upload de l'image réussi\n";
+    } else {
+        //echo "Echec lors de l'upload\n";
+    }
+
+    $url = strtolower($titre);
+    $url = str_replace(" ", "-", $url);
+    echo($url);
+
+    $article = new Article($url, $titre, $soustitre, $texte, $lien_photo, $video);
+    $article->publier();
+  } catch (Exception $e) {
+    echo('Erreur:'.$e);
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,10 +68,11 @@ $bdd = new DB();
         <!-- DatePicker -->
         <link href="css/classic.css" rel="stylesheet" type="text/css" />
         <link href="css/classic.date.css" rel="stylesheet" type="text/css" />
+        <link href="cssBack.css" rel="stylesheet" type="text/css" />
         <!-- Print -->
         <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
     </style>
-        
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -47,7 +91,7 @@ $bdd = new DB();
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">                
+            <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -78,7 +122,7 @@ $bdd = new DB();
                 <!-- /.sidebar -->
             </aside>
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">                
+            <aside class="right-side">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -100,33 +144,33 @@ $bdd = new DB();
                                     <h3 class="box-title">Ajouter un Article </h3>
                                 </div>
                                 <div class="box-body">
-                                    <form method="post" action="ajouter_commande.php" name="ajouter_commande" id="ajouter_commande">
+                                    <form method="post" action="?envoi" name="ajouter_commande" id="ajouter_commande"  enctype="multipart/form-data">
                                      <div class="form-group">
 
-                                        <label for="nom">Titre de l'article :</label>
+                                        <label for="titre">Titre de l'article :</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="nom" id="nom" placeholder="Titre" required>
+                                            <input type="text" class="form-control" name="titre" id="titre" placeholder="Titre" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                         </div>
 
-                                        <label for="lieu">Sous Titre de l'article:</label>
+                                        <label for="soustitre">Sous Titre de l'article:</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="lieu" id="lieu" placeholder="Sous-Titre" required>
+                                            <input type="text" class="form-control" name="soustitre" id="soustitre" placeholder="Sous-Titre" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                         </div>
 
-                                        <label for="desc">Contenu de l'article:</label>
+                                        <label for="texte">Contenu de l'article:</label>
                                         <div class="input-group">
-                                            <textarea class="form-control" rows="5" name="desc" id="desc" placeholder="Ajoutez le texte de l'article dans ce cadre"></textarea>
+                                            <textarea class="form-control" rows="5" name="texte" id="texte" placeholder="Ajoutez le texte de l'article dans ce cadre"></textarea>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                         </div>
 
-                                        <label for="prix">Ajouter une image:</label>
-                                       <input id="input-1" type="file" class="file">
+                                        <label for="image">Ajouter une image:</label>
+                                        <input type="file" class="file" id="image" name="image">
 
-                                        <label for="date">Ajouter une vidéo:</label>
+                                        <label for="video">Ajouter une vidéo:</label>
                                         <div class="input-group">
-                                            <input type="text" class="datepicker form-control" name="date" id="date" placeholder="Ajoutez le lien de la video" required>
+                                            <input type="text" class="datepicker form-control" name="video" id="video" placeholder="Ajoutez le lien de la video" required>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                         </div>
 
@@ -136,7 +180,7 @@ $bdd = new DB();
                                 </div>
                             </div>
                         </div><!-- /.col -->
-                    </div><!-- /.row -->  
+                    </div><!-- /.row -->
 
 
                 </section><!-- /.content -->

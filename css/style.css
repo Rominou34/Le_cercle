@@ -1,0 +1,66 @@
+html {
+        height: 100%;
+}
+body {
+    height: 100%;
+}
+.navbar-nav {
+    margin-left:20%;
+}
+.navbar-default {
+    border-top-width: 0px;
+    margin-bottom: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    background-color: black;
+    border-radius: 0px;
+}
+.pierrnav {
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-right {
+    margin-right: 10%;
+}
+
+.bio {
+    background-color: white;
+}
+.header-unit {
+  min-height: 100%;
+  border-right:none;
+  border-left: none;
+  position: relative;
+  padding: 20px;
+}
+#video-container {
+	position: absolute;
+}
+#video-container {
+	top:0%;
+	left:0%;
+	height:100%;
+	width:100%;
+	overflow: hidden;
+}
+video {
+	position:absolute;
+	z-index:0;
+}
+video.fillWidth {
+	width: 100%;
+}
+
+.imgbio {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+.ecole {
+    background-color: #484244;
+}

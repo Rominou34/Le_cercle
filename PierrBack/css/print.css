@@ -1,0 +1,14 @@
+@page {
+    size: auto;   /* auto is the current printer page size */
+    margin: 0mm;  /* this affects the margin in the printer settings */
+}
+
+@media print {
+    .titleCom {
+        text-decoration: underline;
+        margin: 80px 120px;
+    }
+    .test {
+        display: block;
+    }
+}

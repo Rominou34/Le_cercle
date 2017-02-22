@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('Media.php');
+require('db.class.php');
 $bdd = new DB();
 
 // Lorsque le formulaire a ete envoye
@@ -8,63 +8,72 @@ if(isset($_GET['envoi'])) {
   try {
     // Titre, sous-titre et texte ont été renseignés
     if(!empty($_POST['titre'])) {
-        $titre = $_POST['titre'];
-        $lien_photo = NULL;
-        $video = NULL;
+      $titre = $_POST['titre'];
+      $lien_photo = NULL;
+      $video = NULL;
 
-        // On publie l'article
-        $url = strtolower($titre);
-        $url = str_replace(" ", "-", $url);
+      // On publie l'article
+      $url = strtolower($titre);
+      $url = str_replace(" ", "-", $url);
       
-        $values = array ("titre" => $titre);
-        $countN = $bdd->query("SELECT COUNT(*) FROM articles WHERE titre = :titre;", $values);
-      
-        if ($countN > 0) {
-            echo('<div class="soft-notif alert">Titre déja existant, veuillez réessayer avec un autre titre </div>');
-        }else{
-
+      // Verifie si le titre n'existe pas déja (parce que si oui ça déconne sec)
+      $valuesT = array ("titre" => $titre);
+      $nbTi = $bdd->queryCount("SELECT id FROM medias WHERE titre = :titre;", $valuesT);
+      // echo $nbTi;
+      if ($nbTi > 0) {
+          echo('<div class="soft-notif alert">Titre déja existant, veuillez réessayer avec un autre titre </div>');
+      }else{
+          
             // Soit une vidéo, soit une photo a été choisie
             if(!empty($_POST['video']) xor !empty($_FILES['image']['name'])) {
 
-                // Si c'est une photo, on la met sur le serveur
-                if(!empty($_FILES['image']['name'])) {
+              // Si c'est une photo, on la met sur le serveur
+              if(!empty($_FILES['image']['name'])) {
 
-                  // Verifie si l'image est valide
-                  $target_dir = "../img/img_medias/";
-                  $target_file = $target_dir . basename($_FILES["image"]["name"]);
-                  $image_name = basename($_FILES["image"]["name"]);
-                  $uploadOk = 1;
-                  $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-                  $check = getimagesize($_FILES["image"]["tmp_name"]);
-                  if($check !== false) {
-                      //echo "File is an image - " . $check["mime"] . "\n";
-                      $lien_photo = $image_name;
-                      $uploadOk = 1;
-                  } else {
-                      echo "Le fichier n'est pas une image.";
-                      $uploadOk = 0;
-                  }
-
-                  // Upload de l'image
-                  if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-                      //echo "Upload de l'image réussi\n";
-                  } else {
-                      //echo "Echec lors de l'upload\n";
-                  }
+                // Verifie si l'image est valide
+                $target_dir = "../img/img_articles/";
+                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $image_name = basename($_FILES["image"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                $check = getimagesize($_FILES["image"]["tmp_name"]);
+                if($check !== false) {
+                    //echo "File is an image - " . $check["mime"] . "\n";
+                    $lien_photo = $image_name;
+                    $uploadOk = 1;
                 } else {
-                  // Si c'est une vidéo, on récupère l'url
-                  $video = $_POST['video'];
+                    echo "Le fichier n'est pas une image.";
+                    $uploadOk = 0;
                 }
 
-                $media = new Media($url, $titre, $lien_photo, $video);
-                $media->publier();
+                // Upload de l'image
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                    //echo "Upload de l'image réussi\n";
+                } else {
+                    //echo "Echec lors de l'upload\n";
+                }
+              } else {
+                // Si c'est une vidéo, on récupère l'url
+                $video = $_POST['video'];
+              }
+              
+              //Insertion dans la base
+              $mediaValues = array (
+                  'url' => $url,
+                  'titre' => $titre,
+                  'image' => $lien_photo,
+                  'video' => $video
+              );
+              $bdd -> queryCreate("INSERT INTO medias (url, titre, image, video) VALUES(:url, :titre, :image, :video)", $mediaValues);
+              
             } else {
               echo('<div class="soft-notif alert">Veuillez renseigner une photo OU une vidéo</div>');
             }
-        }
-    } else {
-      echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
-    }
+        }   
+      } else {
+        echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
+      }
+    
   } catch (Exception $e) {
     echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
   }

@@ -1,11 +1,6 @@
 <?php
 class DB {
 
-/*	private $host = 'roigdevcxwmagic.mysql.db';
-	private $userName = 'roigdevcxwmagic';
-	private $password = 'Adminpierr34';
-	private $dataBase = 'roigdevcxwmagic';
-	private $bdd;*/
 
 	private $host = 'localhost';
 	private $userName = 'root';
@@ -29,9 +24,13 @@ class DB {
 	}
 
 	public function query($sql, $data = array()){
+            try {
 		$req = $this->bdd->prepare($sql);
 		$req->execute($data);
-		return $req->fetchAll(PDO::FETCH_OBJ);
+            } catch (Exception $e){
+		echo('<div class="soft-notif alert">'.$e->getMessage().'</div>');
+            }
+            return $req->fetchAll(PDO::FETCH_OBJ);
 	}
 
 	public function queryClass($sql, $data = array(), $class){

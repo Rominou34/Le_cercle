@@ -10,7 +10,7 @@ class DB {
 	private $host = 'localhost';
 	private $userName = 'root';
 	private $password = '';
-	private $dataBase = 'magicien';
+	private $dataBase = 'magic';
 	private $bdd;
 
 	public function __construct($host = null, $userName = null, $password = null, $dataBase = null){

@@ -5,7 +5,7 @@ class DB {
 	private $host = 'localhost';
 	private $userName = 'root';
 	private $password = '';
-	private $dataBase = 'magic';
+	private $dataBase = 'magicien';
 	private $bdd;
 
 	public function __construct($host = null, $userName = null, $password = null, $dataBase = null){

@@ -77,16 +77,18 @@ if(isset($_GET['envoi'])) {
               } else {
               echo('<div class="soft-notif alert">Veuillez renseigner une photo OU une vidéo</div>');
             }
-        }   
+        }
       } else {
         echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
       }
-    
+
   } catch (Exception $e) {
     echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
   }
 }
+
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -121,6 +123,73 @@ if(isset($_GET['envoi'])) {
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
+
+    <?php
+    /*
+    ***** ENVOI *****
+    */
+
+    // Lorsque le formulaire a ete envoye
+    if(isset($_GET['envoi'])) {
+      try {
+        // Titre, sous-titre et texte ont été renseignés
+        if(!empty($_POST['titre']) && !empty($_POST['soustitre']) && !empty($_POST['texte'])) {
+          $titre = $_POST['titre'];
+          $soustitre = $_POST['soustitre'];
+          $texte = $_POST['texte'];
+          $lien_photo = NULL;
+          $video = NULL;
+
+          // On publie l'article
+          $url = strtolower($titre);
+          $url = str_replace(" ", "-", $url);
+
+          // Soit une vidéo, soit une photo a été choisie
+          if(!empty($_POST['video']) xor !empty($_FILES['image']['name'])) {
+
+            // Si c'est une photo, on la met sur le serveur
+            if(!empty($_FILES['image']['name'])) {
+
+              // Verifie si l'image est valide
+              $target_dir = "../img/img_articles/";
+              $target_file = $target_dir . basename($_FILES["image"]["name"]);
+              $image_name = basename($_FILES["image"]["name"]);
+              $uploadOk = 1;
+              $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+              $check = getimagesize($_FILES["image"]["tmp_name"]);
+              if($check !== false) {
+                  //echo "File is an image - " . $check["mime"] . "\n";
+                  $lien_photo = $image_name;
+                  $uploadOk = 1;
+              } else {
+                  echo "Le fichier n'est pas une image.";
+                  $uploadOk = 0;
+              }
+
+              // Upload de l'image
+              if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                  //echo "Upload de l'image réussi\n";
+              } else {
+                  //echo "Echec lors de l'upload\n";
+              }
+            } else {
+              // Si c'est une vidéo, on récupère l'url
+              $video = $_POST['video'];
+            }
+
+            $article = new Article($url, $titre, $soustitre, $texte, $lien_photo, $video);
+            $article->publier();
+          } else {
+            echo('<div class="soft-notif alert">Veuillez renseigner une photo OU une vidéo</div>');
+          }
+        } else {
+          echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
+        }
+      } catch (Exception $e) {
+        echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
+      }
+    }
+    ?>
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -247,7 +316,11 @@ if(isset($_GET['envoi'])) {
                                         <td scope="row"><?= $article->id; ?></td>
                                         <td><?= $article->titre; ?></td>
                                         <td><?= $article->date; ?></td>
-                                        <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
+                                        <td>
+                                          <a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#edit-<?php echo($article->id); ?>">
+                                            <i class="fa fa-edit"></i>
+                                          </a>
+                                        </td>
                                         <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                     <?php endforeach ?>
@@ -261,7 +334,71 @@ if(isset($_GET['envoi'])) {
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+        <?php
+        $articles_edit = $bdd->query(" SELECT * FROM articles;");
+        foreach ($articles_edit as $article_edit) {
+        ?>
+          <!-- MODALS !-->
+          <div class="modal fade" tabindex="-1" role="dialog" id="edit-<?php echo($article_edit->id); ?>">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Article #<?php echo($article_edit->id); ?></h4>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="?envoi" name="ajouter_article" id="ajouter_article"  enctype="multipart/form-data">
+                   <div class="form-group">
 
+                      <label for="titre">Titre de l'article :</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" name="titre" id="titre" value="<?php echo($article_edit->titre); ?>" required>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      </div>
+
+                      <label for="soustitre">Sous Titre de l'article:</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" name="soustitre" id="soustitre" value="<?php echo($article_edit->soustitre); ?>" required>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      </div>
+
+                      <label for="texte">Contenu de l'article:</label>
+                      <div class="input-group">
+                          <textarea class="form-control" rows="5" name="texte" id="texte" required><?php echo($article_edit->texte); ?></textarea>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      </div>
+                      <?php
+                        if($article_edit->image != NULL) {
+                          ?>
+                          <img src="../img/img_articles/<?php echo($article_edit->image) ?>" style="max-width: 100%;"></img>
+                          <?php
+                        } else {
+                          ?>
+                          <label for="video">Vidéo:</label>
+                          <div class="input-group">
+                              <input type="text" class="datepicker form-control" name="video" id="video" value="<?php echo($article_edit->video); ?>" required>
+                              <span class="input-group-addon"></span>
+                          </div>
+                          <?php
+                        }
+                      ?>
+
+
+
+                  </div>
+                  <input type="submit" name="ajouter_commande" value="Ajouter" class="btn btn-info pull-center">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                  <button type="button" class="btn btn-danger">Sauvegarder</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+        <?php
+        }
+        ?>
 
         <!-- jQuery UI 1.10.3 -->
         <script src="js/jquery.js" type="text/javascript"></script>

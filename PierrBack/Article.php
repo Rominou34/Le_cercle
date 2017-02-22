@@ -74,10 +74,7 @@ class Article {
   public function publier() {
     $this->insertArticle($this->url, $this->titre, $this->soustitre, $this->texte, $this->image, $this->video);
   }
-  
-  public function  getAllArticles () {
-      
-  }
+
   public static function deleteArticle(){
       $sql = "DELETE FROM articles WHERE id = :id;";
       $values = array ("id" => $this->id);

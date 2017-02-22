@@ -3,6 +3,8 @@ session_start();
 
 require('Article.php');
 
+$bdd = new DB();
+
 // Lorsque le formulaire a ete envoye
 if(isset($_GET['envoi'])) {
   try {
@@ -46,10 +48,6 @@ if(isset($_GET['envoi'])) {
   }
 }
 ?>
-
-
-<!-- --------------------------------------------HTML-------------------------------------------- -->
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -170,7 +168,7 @@ if(isset($_GET['envoi'])) {
                                         </div>
 
                                         <label for="image">Ajouter une image:</label>
-                                        <input type="file" class="file" id="image" name="image" required>
+                                        <input type="file" class="file" id="image" name="image">
 
                                         <label for="video">Ajouter une vidéo:</label>
                                         <div class="input-group">
@@ -201,16 +199,20 @@ if(isset($_GET['envoi'])) {
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <?php
-                                        foreach ($article as $a) {
-                                            echo '<th scope="row">' .$a ->getId(). '</th>';
-                                            echo '<th scope="row">' .$a ->getTitre(). '</th>';
-                                            echo '<th scope="row">' .$a ->getDate(). '</th>';
-                                            echo '<td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
-                                      <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>';     
-                                        }
+    
+                                        <?php
+                                       $articles = $bdd->query(" SELECT * FROM articles;");                  
+                                        
+                                        foreach ($articles as $article) :
                                       ?>
+
+                                      <td scope="row"><?= $article->id; ?></td>
+                                      <td><?= $article->titre; ?></td>
+                                      <td><?= $article->date; ?></td>
+                                      <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
+                                      <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
+                                    <?php endforeach ?>
                                   </tbody>
                                 </table>
                             </div>

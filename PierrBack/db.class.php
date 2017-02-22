@@ -10,7 +10,7 @@ class DB {
 	private $host = 'localhost';
 	private $userName = 'root';
 	private $password = '';
-	private $dataBase = 'magic';
+	private $dataBase = 'magicien';
 	private $bdd;
 
 	public function __construct($host = null, $userName = null, $password = null, $dataBase = null){
@@ -46,11 +46,11 @@ class DB {
 			$req = $this->bdd->prepare($sql);
 			$req->execute($data);
 		} catch (Exception $e) {
-			return $e->getMessage();
+			echo('<div class="soft-notif alert">'.$e->getMessage().'</div>');
 		}
-		return "Article publié avec succès";
+		echo('<div class="soft-notif success">Publié avec succès</div>');
 	}
-        
+
         public function queryDelete($sql, $data = array()){
                 try {
                     $req = $this->bdd->prepare($sql);

@@ -12,16 +12,26 @@
   -moz-border-radius: 2px;
   border-radius: 2px;
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  max-width: 400px;
-  min-width: 120px;
-  z-index: 5;
+  top: 10px;
+  left: 10%;
+  box-sizing: border-box;
+  width: 80%;
+  z-index: 1200;
   line-height: 40px;
   padding: 4px 16px !important;
   animation: plop 4s 0s ease-in-out;
   animation-fill-mode: both;
   animation-iteration-count: 1;
+}
+
+.soft-notif.alert {
+  background-color: #edbdbd;
+  border-color: #721d1d;
+}
+
+.soft-notif.success {
+  background-color: #afd8af;
+  border-color: #1b681b;
 }
 
 /* ANIMATIONS */

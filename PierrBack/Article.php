@@ -46,7 +46,7 @@ class Article {
   }
 
   public function __construct($u = NULL, $ti = NULL, $st = NULL, $te = NULL, $im = NULL, $vid = NULL) {
-    if(!is_null($u) && !is_null($ti) && !is_null($st) && !is_null($te) && !is_null($im) && !is_null($vid)) {
+    if(!is_null($u) && !is_null($ti) && !is_null($st) && !is_null($te)) {
       $this->url = $u;
       $this->titre = $ti;
       $this->soustitre = $st;
@@ -67,11 +67,11 @@ class Article {
       "video" => $vid
     );
     $bdd = new DB();
-    $msg = $bdd->queryCreate($sql, $values);
-    echo('<div class="soft-notif">'.$msg.'</div>');
+    $bdd->queryCreate($sql, $values);
   }
 
   public function publier() {
+    echo('Url pub: '.$this->url);
     $this->insertArticle($this->url, $this->titre, $this->soustitre, $this->texte, $this->image, $this->video);
   }
 

@@ -46,6 +46,10 @@ if(isset($_GET['envoi'])) {
   }
 }
 ?>
+
+
+<!-- --------------------------------------------HTML-------------------------------------------- -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -166,11 +170,11 @@ if(isset($_GET['envoi'])) {
                                         </div>
 
                                         <label for="image">Ajouter une image:</label>
-                                        <input type="file" class="file" id="image" name="image">
+                                        <input type="file" class="file" id="image" name="image" required>
 
                                         <label for="video">Ajouter une vidéo:</label>
                                         <div class="input-group">
-                                            <input type="text" class="datepicker form-control" name="video" id="video" placeholder="Ajoutez le lien de la video" required>
+                                            <input type="text" class="datepicker form-control" name="video" id="video" placeholder="Ajoutez le lien de la video">
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                         </div>
 
@@ -178,6 +182,37 @@ if(isset($_GET['envoi'])) {
                                     <input type="submit" name="ajouter_commande" value="Ajouter" class="btn btn-info pull-center">
                                     </form>
                                 </div>
+                            </div>
+                        </div><!-- /.col -->
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Liste des Articles </h3>
+                                </div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>#ID</th>
+                                      <th>Titre</th>
+                                      <th>Date</th>
+                                      <th>Modifier</th>
+                                      <th>Supprimer</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <?php
+                                        foreach ($article as $a) {
+                                            echo '<th scope="row">' .$a ->getId(). '</th>';
+                                            echo '<th scope="row">' .$a ->getTitre(). '</th>';
+                                            echo '<th scope="row">' .$a ->getDate(). '</th>';
+                                            echo '<td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
+                                      <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>';     
+                                        }
+                                      ?>
+                                    </tr>
+                                  </tbody>
+                                </table>
                             </div>
                         </div><!-- /.col -->
                     </div><!-- /.row -->

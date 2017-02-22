@@ -91,4 +91,11 @@ class Article {
     $bdd = new DB();
     return $bdd->queryClass($sql, $values, 'Article');
   }
+  
+  public static function verifTitle ($name) {
+      $sql = "SELECT COUNT(*) from articles WHERE titre = :title";
+      $values = array ("title" => $name);
+      $bdd = new DB ();
+
+  }
 }

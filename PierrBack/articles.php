@@ -19,48 +19,58 @@ if(isset($_GET['envoi'])) {
       // On publie l'article
       $url = strtolower($titre);
       $url = str_replace(" ", "-", $url);
+      
+      
+      $values = array ("titre" => $titre);
+      $countN = $bdd->query("SELECT COUNT(*) FROM articles WHERE titre = :titre;", $values);
+      
+      if ($countN > 0) {
+          echo('<div class="soft-notif alert">Titre déja existant, veuillez réessayer avec un autre titre </div>');
+      }else{
+          
+            // Soit une vidéo, soit une photo a été choisie
+            if(!empty($_POST['video']) xor !empty($_FILES['image']['name'])) {
 
-      // Soit une vidéo, soit une photo a été choisie
-      if(!empty($_POST['video']) xor !empty($_FILES['image']['name'])) {
+              // Si c'est une photo, on la met sur le serveur
+              if(!empty($_FILES['image']['name'])) {
 
-        // Si c'est une photo, on la met sur le serveur
-        if(!empty($_FILES['image']['name'])) {
+                // Verifie si l'image est valide
+                $target_dir = "../img/img_articles/";
+                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $image_name = basename($_FILES["image"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                $check = getimagesize($_FILES["image"]["tmp_name"]);
+                if($check !== false) {
+                    //echo "File is an image - " . $check["mime"] . "\n";
+                    $lien_photo = $image_name;
+                    $uploadOk = 1;
+                } else {
+                    echo "Le fichier n'est pas une image.";
+                    $uploadOk = 0;
+                }
 
-          // Verifie si l'image est valide
-          $target_dir = "../img/img_articles/";
-          $target_file = $target_dir . basename($_FILES["image"]["name"]);
-          $image_name = basename($_FILES["image"]["name"]);
-          $uploadOk = 1;
-          $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-          $check = getimagesize($_FILES["image"]["tmp_name"]);
-          if($check !== false) {
-              //echo "File is an image - " . $check["mime"] . "\n";
-              $lien_photo = $image_name;
-              $uploadOk = 1;
-          } else {
-              echo "Le fichier n'est pas une image.";
-              $uploadOk = 0;
-          }
+                // Upload de l'image
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                    //echo "Upload de l'image réussi\n";
+                } else {
+                    //echo "Echec lors de l'upload\n";
+                }
+              } else {
+                // Si c'est une vidéo, on récupère l'url
+                $video = $_POST['video'];
+              }
 
-          // Upload de l'image
-          if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-              //echo "Upload de l'image réussi\n";
-          } else {
-              //echo "Echec lors de l'upload\n";
-          }
-        } else {
-          // Si c'est une vidéo, on récupère l'url
-          $video = $_POST['video'];
-        }
-
-        $article = new Article($url, $titre, $soustitre, $texte, $lien_photo, $video);
-        $article->publier();
+              $article = new Article($url, $titre, $soustitre, $texte, $lien_photo, $video);
+              $article->publier();
+            } else {
+              echo('<div class="soft-notif alert">Veuillez renseigner une photo OU une vidéo</div>');
+            }
+        }   
       } else {
-        echo('<div class="soft-notif alert">Veuillez renseigner une photo OU une vidéo</div>');
+        echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
       }
-    } else {
-      echo('<div class="soft-notif alert">Veuillez renseigner les champs requis</div>');
-    }
+    
   } catch (Exception $e) {
     echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
   }

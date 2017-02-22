@@ -164,7 +164,7 @@ if(isset($_GET['envoi'])) {
                                     <h3 class="box-title">Ajouter un Article </h3>
                                 </div>
                                 <div class="box-body">
-                                    <form method="post" action="?envoi" name="ajouter_commande" id="ajouter_commande"  enctype="multipart/form-data">
+                                    <form method="post" action="?envoi" name="ajouter_article" id="ajouter_article"  enctype="multipart/form-data">
                                      <div class="form-group">
 
                                         <label for="titre">Titre de l'article :</label>
@@ -191,7 +191,7 @@ if(isset($_GET['envoi'])) {
                                         <label for="video">Ajouter une vidéo:</label>
                                         <div class="input-group">
                                             <input type="text" class="datepicker form-control" name="video" id="video" placeholder="Ajoutez le lien de la video">
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                                            <span class="input-group-addon"></span>
                                         </div>
 
                                     </div>
@@ -220,15 +220,14 @@ if(isset($_GET['envoi'])) {
 
                                         <?php
                                        $articles = $bdd->query(" SELECT * FROM articles;");
+                                       foreach ($articles as $article) :
+                                     ?>
 
-                                        foreach ($articles as $article) :
-                                      ?>
-
-                                      <td scope="row"><?= $article->id; ?></td>
-                                      <td><?= $article->titre; ?></td>
-                                      <td><?= $article->date; ?></td>
-                                      <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
-                                      <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
+                                        <td scope="row"><?= $article->id; ?></td>
+                                        <td><?= $article->titre; ?></td>
+                                        <td><?= $article->date; ?></td>
+                                        <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
+                                        <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
                                     </tr>
                                     <?php endforeach ?>
                                   </tbody>

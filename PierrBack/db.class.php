@@ -58,7 +58,7 @@ class DB {
 		} catch (Exception $e) {
                     return $e->getMessage();
 		}
-		return "Article supprimé avec succès";
+		return "Supprimé avec succès";
         }
 
 	public function queryOne($sql, $data = array()){

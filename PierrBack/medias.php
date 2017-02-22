@@ -1,7 +1,48 @@
 <?php
 session_start();
-require 'db.class.php';
+require('Media.php');
 $bdd = new DB();
+
+// Lorsque le formulaire a ete envoye
+if(isset($_GET['envoi'])) {
+  try {
+    $titre = $_POST['titre'];
+    $lien_photo = NULL;
+    $video = $_POST['video'];
+
+    // Verifie si l'image est valide
+    $target_dir = "../img/img_medias/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $image_name = basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if($check !== false) {
+        //echo "File is an image - " . $check["mime"] . "\n";
+        $lien_photo = $image_name;
+        $uploadOk = 1;
+    } else {
+        echo "Le fichier n'est pas une image.";
+        $uploadOk = 0;
+    }
+
+    // Upload de l'image
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+        //echo "Upload de l'image réussi\n";
+    } else {
+        //echo "Echec lors de l'upload\n";
+    }
+
+    $url = strtolower($titre);
+    $url = str_replace(" ", "-", $url);
+    echo($url);
+
+    $media = new Media($url, $titre, $lien_photo, $video);
+    $media->publier();
+  } catch (Exception $e) {
+    echo('Erreur:'.$e);
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,8 +136,71 @@ $bdd = new DB();
                 <section class="content">
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Ajouter un Media </h3>
+                                </div>
+                                <div class="box-body">
+                                    <form method="post" action="?envoi" name="ajouter_media" id="ajouter_media"  enctype="multipart/form-data">
+                                     <div class="form-group">
+
+                                        <label for="titre">Titre du Media :</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="titre" id="titre" placeholder="Titre" required>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                                        </div>
+
+                                        <label for="image">Ajouter une image:</label>
+                                        <input type="file" class="file" id="image" name="image">
+
+                                        <label for="video">Ajouter une vidéo:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="datepicker form-control" name="video" id="video" placeholder="Ajoutez le lien de la video">
+                                            <span class="input-group-addon"></span>
+                                        </div>
+
+                                    </div>
+                                    <input type="submit" name="ajouter_media" value="Ajouter" class="btn btn-info pull-center">
+                                    </form>
+                                </div>
+                            </div>
                         </div><!-- /.col -->
-                    </div><!-- /.row -->  
+                        <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Liste des Médias </h3>
+                                </div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>#ID</th>
+                                      <th>Titre</th>
+                                      <th>Date</th>
+                                      <th>Modifier</th>
+                                      <th>Supprimer</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+    
+                                    <?php
+                                       $medias = $bdd->query(" SELECT * FROM medias;"); 
+                                       foreach ($medias as $media) :
+                                     ?>
+
+                                        <td scope="row"><?= $media->id; ?></td>
+                                        <td><?= $media->titre; ?></td>
+                                        <td><?= $media->date; ?></td>
+                                        <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
+                                        <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
+                                    </tr>
+                                    <?php endforeach ?>
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                    
 
 
                 </section><!-- /.content -->

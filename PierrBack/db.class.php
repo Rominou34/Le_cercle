@@ -48,7 +48,7 @@ class DB {
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}
-		return "Article publié avec succès";
+		return "Ajouté avec succès";
 	}
         
         public function queryDelete($sql, $data = array()){
@@ -58,7 +58,7 @@ class DB {
 		} catch (Exception $e) {
                     return $e->getMessage();
 		}
-		return "Article supprimé avec succès";
+		return "Supprimé avec succès";
         }
 
 	public function queryOne($sql, $data = array()){

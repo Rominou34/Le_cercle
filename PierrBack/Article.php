@@ -83,15 +83,15 @@ class Article {
       echo('<div class="soft-notif">'.$msg.'</div>');
   }
 
-  public static function getArticleByUrl($url) {
-    $sql = "SELECT * from articles WHERE url=:url";
+  public static function getArticleById($id) {
+    $sql = "SELECT * from articles WHERE id=:id";
     $values = array(
-      "url" => $url
+      "id" => $id
     );
     $bdd = new DB();
     return $bdd->queryClass($sql, $values, 'Article');
   }
-  
+
   public static function verifTitle ($name) {
       $sql = "SELECT COUNT(*) from articles WHERE titre = :title";
       $values = array ("title" => $name);

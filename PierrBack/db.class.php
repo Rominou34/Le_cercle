@@ -1,17 +1,17 @@
 <?php
 class DB {
 
-/*	private $host = 'roigdevcxwmagic.mysql.db';
-	private $userName = 'roigdevcxwmagic';
-	private $password = 'Adminpierr34';
-	private $dataBase = 'roigdevcxwmagic';
-	private $bdd;*/
-
 	private $host = 'localhost';
 	private $userName = 'root';
 	private $password = '';
-	private $dataBase = 'magic';
+	private $dataBase = 'magicien';
 	private $bdd;
+
+	// private $host = '10.0.216.66';
+	// private $userName = 'qgandcom';
+	// private $password = '10Qgandcom';
+	// private $dataBase = 'site_qgandcom';
+	// private $bdd;
 
 	public function __construct($host = null, $userName = null, $password = null, $dataBase = null){
 		if ($host != null) {
@@ -34,33 +34,6 @@ class DB {
 		return $req->fetchAll(PDO::FETCH_OBJ);
 	}
 
-	public function queryClass($sql, $data = array(), $class){
-		$req = $this->bdd->prepare($sql);
-		$req->execute($data);
-		$req->setFetchMode(PDO::FETCH_CLASS, $class);
-		return $req->fetch();
-	}
-
-	public function queryCreate($sql, $data = array()){
-		try {
-			$req = $this->bdd->prepare($sql);
-			$req->execute($data);
-		} catch (Exception $e) {
-			echo('<div class="soft-notif alert">'.$e->getMessage().'</div>');
-		}
-		echo('<div class="soft-notif success">Publié avec succès</div>');
-	}
-
-        public function queryDelete($sql, $data = array()){
-                try {
-                    $req = $this->bdd->prepare($sql);
-                    $req->execute($data);
-		} catch (Exception $e) {
-                    return $e->getMessage();
-		}
-		return "Supprimé avec succès";
-        }
-
 	public function queryOne($sql, $data = array()){
 		$req = $this->bdd->prepare($sql);
 		$req->execute($data);
@@ -77,6 +50,13 @@ class DB {
 		$req = $this->bdd->prepare($sql);
 		$req->execute($data);
 		return $req;
+	}
+
+	public function queryClass($sql, $data = array(), $class){
+		$req = $this->bdd->prepare($sql);
+		$req->execute($data);
+		$req->setFetchMode(PDO::FETCH_CLASS, $class);
+		return $req->fetch();
 	}
 }
 ?>

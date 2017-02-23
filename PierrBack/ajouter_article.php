@@ -20,7 +20,7 @@
 		$soustitre = $_POST['soustitre'];
 		//TEXTE
 		$textbase = $_POST['texte'];
-        $texte = htmlspecialchars($textbase);
+                $texte = htmlspecialchars($textbase);
 		if(!empty($_POST['titre']) && !empty($_POST['soustitre']) && !empty($_POST['texte'])) {
 
             // Soit une vidéo, soit une photo a été choisie
@@ -57,9 +57,11 @@
                 
                 redirect_to("articles.php?alert=success");
             } else {
-                
-                redirect_to("articles.php?alert=errorField");
-			}
-	}
+                redirect_to("articles.php?alert=errorVisu");
+            }
+	} else {
+            redirect_to("articles.php?alert=errorField");
+        }
+       
     }
 ?>	

@@ -93,7 +93,9 @@
                <?php
                if(isset($_GET['alert'])) {
                   if ($_GET['alert'] == 'errorField') { ?>
-                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Vous n'avez pas remplit tous les champs.</div>
+                <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Vous n'avez pas remplit tous les champs.</div>
+                 <?php } else if ($_GET['alert'] == 'errorVisu') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Veuillez ajouter une image ou une vidéo.</div> 
                  <?php } else if ($_GET['alert'] == 'success') { ?>
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'évenement a bien été ajouté.</div>
                  <?php } else if ($_GET['alert'] == 'successDel') { ?>

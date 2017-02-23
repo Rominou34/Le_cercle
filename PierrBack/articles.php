@@ -128,7 +128,7 @@
                                  </div>
                                  <label for="texte">Contenu de l'article:</label>
                                  <div class="input-group">
-                                    <textarea class="form-control" rows="5" name="texte" id="texte" placeholder="Ajoutez le texte de l'article dans ce cadre"></textarea>
+                                    <textarea class="form-control" rows="5" name="texte" id="texte" placeholder="Ajoutez le texte de l'article dans ce cadre" required></textarea>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                                  </div>
                                  <label for="image">Ajouter une image:</label>

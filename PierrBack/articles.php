@@ -100,6 +100,7 @@
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès!</strong>  L'article  a été supprimée.</div>
                  <?php } else if ($_GET['alert'] == 'errorDel') { ?>
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur!</strong>  L'article  n'a pas été supprimée.</div>
+
                <?php } } ?>
                <div class="row">
                   <div class="col-md-6">

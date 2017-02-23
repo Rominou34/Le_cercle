@@ -80,7 +80,11 @@
       <section style="height: 100%;">
          <div class="header-unit">
             <div id="video-container">
+<<<<<<< HEAD
                <video autoplay  muted class="fillWidth" style="bottom: 0px;">
+=======
+               <video autoplay loop muted class="fillWidth" style="bottom: 0px;">
+>>>>>>> 58a6192840b0dd24d2ea2a10d3ce77b0e08c8fb7
                   <source src="img/videomagic.mp4" type="video/mp4"/>
                   Votre navigateur ne supporte pas la lecture de vidéo.
                </video>
@@ -105,7 +109,11 @@
                <a href="#" class="btn btn-danger"> Découvrir la suite...</a>
             </div>
             <div class="col-md-5">
+<<<<<<< HEAD
                <div class="imgbio"><img onclick="image()" src="img/Pierr-3-dos.jpg" class="img-responsive" alt="Pierre cika sur un tabouret"></div>
+=======
+               <div class="imgbio"><img src="img/cikabio.jpg" class="img-responsive" alt="Pierre cika sur un tabouret"></div>
+>>>>>>> 58a6192840b0dd24d2ea2a10d3ce77b0e08c8fb7
             </div>
          </div>
       </section>

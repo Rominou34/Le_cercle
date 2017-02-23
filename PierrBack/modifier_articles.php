@@ -24,7 +24,6 @@
 		$textbase = $_POST['texte'];
     $texte = htmlspecialchars($textbase);
 		if(!empty($_POST['titre']) && !empty($_POST['soustitre']) && !empty($_POST['texte'])) {
-
       $article_actuel = Article::getArticlebyId($id);
       var_dump($article_actuel);
       $values = array(

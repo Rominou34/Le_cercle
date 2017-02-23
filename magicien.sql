@@ -10,6 +10,12 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Base de données :  `magicien`
 --
@@ -33,6 +39,7 @@ CREATE TABLE `articles` (
 --
 -- Contenu de la table `articles`
 --
+
 
 INSERT INTO `articles` (`id`, `titre`, `soustitre`, `texte`, `image`, `video`, `date`) VALUES
 (6, 'Test de publication', 'voila voila', 'test', '1468792948474.png', 'https://www.youtube.com/watch?v=sDc0ZUBm38Y', '2017-02-21 11:42:08'),
@@ -112,6 +119,83 @@ ALTER TABLE `commande`
   ADD KEY `fk_commande_prix_produit1_idx` (`prix_produit_id`),
   ADD KEY `id_praticien` (`id_praticien`);
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `medias`
+--
+
+CREATE TABLE `medias` (
+  `id` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `titre` varchar(50) NOT NULL,
+  `image` text,
+  `video` text,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `medias`
+--
+
+INSERT INTO `medias` (`id`, `url`, `titre`, `image`, `video`, `date`) VALUES
+(3, 'blop', 'blop', NULL, NULL, '2017-02-22 20:38:15'),
+(4, 'blip', 'blip', '1371867985_01-36.jpg', NULL, '2017-02-22 20:40:45');
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `url` (`url`);
+
+--
+-- Index pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`num`,`patient_id`,`prix_produit_id`),
+  ADD KEY `fk_commande_patient1_idx` (`patient_id`),
+  ADD KEY `fk_commande_prix_produit1_idx` (`prix_produit_id`),
+  ADD KEY `id_praticien` (`id_praticien`);
+
+--
+-- Index pour la table `commande_calendrier`
+--
+ALTER TABLE `commande_calendrier`
+  ADD PRIMARY KEY (`id`,`commande_num`),
+  ADD KEY `fk_commande_calendrier_commande1_idx` (`commande_num`);
+
+--
+-- Index pour la table `medias`
+--
+ALTER TABLE `medias`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `url` (`url`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+--
+-- AUTO_INCREMENT pour la table `commande`
+--
+ALTER TABLE `commande`
+  MODIFY `num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+--
+-- AUTO_INCREMENT pour la table `medias`
+--
+ALTER TABLE `medias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Index pour la table `commande_calendrier`
 --

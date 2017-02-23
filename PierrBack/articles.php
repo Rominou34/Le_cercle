@@ -93,14 +93,17 @@
                <?php
                if(isset($_GET['alert'])) {
                   if ($_GET['alert'] == 'errorField') { ?>
-                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur!</strong> Vous n'avez pas remplit tous les champs.</div>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Vous n'avez pas remplit tous les champs.</div>
                  <?php } else if ($_GET['alert'] == 'success') { ?>
-                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès!</strong> L'évenement a bien été ajoutée.</div>
+                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'évenement a bien été ajouté.</div>
                  <?php } else if ($_GET['alert'] == 'successDel') { ?>
-                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès!</strong>  L'article  a été supprimée.</div>
+                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'article  a bien été supprimé.</div>
                  <?php } else if ($_GET['alert'] == 'errorDel') { ?>
-                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur!</strong>  L'article  n'a pas été supprimée.</div>
-
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'article  n'a pas été supprimé.</div>
+                <?php } else if ($_GET['alert'] == 'successEdit') { ?>
+                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'article  a bien été modifié.</div>
+                 <?php } else if ($_GET['alert'] == 'errorEdit') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'article  n'a pas été modifié.</div>
                <?php } } ?>
                <div class="row">
                   <div class="col-md-6">
@@ -109,7 +112,7 @@
                            <h3 class="box-title">Ajouter un Article </h3>
                         </div>
                         <div class="box-body">
-                           <form method="post" action="ajouter_articles.php" name="ajouter_articles" id="ajouter_articles"  enctype="multipart/form-data">
+                           <form method="post" action="ajouter_article.php" name="ajouter_article" id="ajouter_article"  enctype="multipart/form-data">
                               <div class="form-group">
                                  <label for="titre">Titre de l'article :</label>
                                  <div class="input-group">
@@ -216,7 +219,7 @@
               <h4 class="modal-title">Article #<?php echo($article_edit->id); ?></h4>
             </div>
             <div class="modal-body">
-              <form method="post" action="modifier_articles.php?id=<?php echo($article_edit->id)?>" name="edit_<?php echo($article_edit->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
+              <form method="post" action="modifier_article.php?id=<?php echo($article_edit->id)?>" name="edit_<?php echo($article_edit->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
                <div class="form-group">
 
                   <label for="titre">Titre de l'article :</label>

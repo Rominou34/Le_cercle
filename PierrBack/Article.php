@@ -4,7 +4,6 @@ require 'db.class.php';
 
 class Article {
   private $id;
-  private $url;
   private $titre;
   private $soustitre;
   private $texte;
@@ -15,10 +14,6 @@ class Article {
 
   public function getId() {
     return $this->id;
-  }
-
-  public function getUrl() {
-    return $this->url;
   }
 
   public function getTitre() {
@@ -45,9 +40,8 @@ class Article {
     return $this->date;
   }
 
-  public function __construct($u = NULL, $ti = NULL, $st = NULL, $te = NULL, $im = NULL, $vid = NULL) {
-    if(!is_null($u) && !is_null($ti) && !is_null($st) && !is_null($te)) {
-      $this->url = $u;
+  public function __construct($ti = NULL, $st = NULL, $te = NULL, $im = NULL, $vid = NULL) {
+    if(!is_null($ti) && !is_null($st) && !is_null($te)) {
       $this->titre = $ti;
       $this->soustitre = $st;
       $this->texte = $te;
@@ -56,10 +50,9 @@ class Article {
     }
   }
 
-  public static function insertArticle($u, $ti, $st, $te, $im, $vid) {
-    $sql = "INSERT INTO articles(url, titre, soustitre, texte, image, video) VALUES(:url, :titre, :soustitre, :texte, :image, :video)";
+  public static function insertArticle($ti, $st, $te, $im, $vid) {
+    $sql = "INSERT INTO articles(titre, soustitre, texte, image, video) VALUES(:url, :titre, :soustitre, :texte, :image, :video)";
     $values = array(
-      "url" => $u,
       "titre" => $ti,
       "soustitre" => $st,
       "texte" => $te,
@@ -71,8 +64,7 @@ class Article {
   }
 
   public function publier() {
-    echo('Url pub: '.$this->url);
-    $this->insertArticle($this->url, $this->titre, $this->soustitre, $this->texte, $this->image, $this->video);
+    $this->insertArticle($this->titre, $this->soustitre, $this->texte, $this->image, $this->video);
   }
 
   public static function deleteArticle(){
@@ -83,15 +75,15 @@ class Article {
       echo('<div class="soft-notif">'.$msg.'</div>');
   }
 
-  public static function getArticleByUrl($url) {
-    $sql = "SELECT * from articles WHERE url=:url";
+  public static function getArticleById($id) {
+    $sql = "SELECT * from articles WHERE id=:id";
     $values = array(
-      "url" => $url
+      "id" => $id
     );
     $bdd = new DB();
     return $bdd->queryClass($sql, $values, 'Article');
   }
-  
+
   public static function verifTitle ($name) {
       $sql = "SELECT COUNT(*) from articles WHERE titre = :title";
       $values = array ("title" => $name);

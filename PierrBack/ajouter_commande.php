@@ -4,13 +4,12 @@
 	{
 		header("Location: $url");
 	}
-
 	include("db.class.php");
 	$bdd = new DB();
 
 	/*
 	**************************
-	*  AJOUTER UNE COMMANDE  *
+	*  AJOUTER UN EVENEMENT  *
 	**************************
 	*/
 

@@ -239,21 +239,109 @@ $bdd = new DB();
                                         <td scope="row"><?= $media->id; ?></td>
                                         <td><?= $media->titre; ?></td>
                                         <td><?= $media->date; ?></td>
-                                        <td><a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-edit"></i></a></td>
-                                        <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
+                                        <td>
+                                          <a href="#" class="btn btn-warning" data-dismiss="modal" data-toggle="modal" data-target="#edit-<?php echo($media->id); ?>">
+                                            <i class="fa fa-edit"></i>
+                                          </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#del-<?php echo($media->id); ?>">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php endforeach ?>
                                   </tbody>
                                 </table>
                             </div>
                         </div><!-- /.col -->
-                    </div><!-- /.row -->
-                    
-
-
+                    </div><!-- /.row -->  
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+        <?php
+        $medias_alter = $bdd->query("SELECT * FROM medias;");
+        foreach ($medias_alter as $media_alt) {
+        ?>
+          <!-- MODALS !-->
+          <div class="modal fade" tabindex="-1" role="dialog" id="edit-<?php echo($media_alt->id); ?>">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Média #<?php echo($media_alt->id); ?></h4>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="?envoi" name="ajouter_media" id="ajouter_media"  enctype="multipart/form-data">
+                   <div class="form-group">
+
+                      <label for="titre">Titre du Média :</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" name="titre" id="titre" value="<?php echo($media_alt->titre); ?>" required>
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      </div>
+                      
+                      <?php
+                        if($media_alt->image != NULL) {
+                          ?>
+                          <img src="../img/img_medias/<?php echo($media_alt->image) ?>" style="max-width: 100%;"></img>
+                          <?php
+                        } else {
+                          ?>
+                          <label for="video">Vidéo:</label>
+                          <div class="input-group">
+                              <input type="text" class="datepicker form-control" name="video" id="video" value="<?php echo($media_alt->video); ?>" required>
+                              <span class="input-group-addon"></span>
+                          </div>
+                          <?php
+                        }
+                      ?>
+                  </div>
+                  <input type="submit" name="ajouter_commande" value="Ajouter" class="btn btn-info pull-center">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-danger">Sauvegarder</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+          
+         <!-- MODAL SUPPR -->
+         <div class="modal fade" tabindex="-1" role="dialog" id="del-<?php echo($media_alt->id); ?>">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body"> 
+                    <h4 class="modal-delete">Voulez-vous vraiment supprimer le média "<?php echo($media_alt->titre)?>" ?</h4>
+                </div>
+                <div class="modal-delete">
+                    <form method="post" action="?delete&id=<?php echo $media_alt->id ?>">
+                        <input type="button" name="annuler" value="Annuler" class="btn btn-default pull-center"  >
+                        <input type="submit" name="supprimer" value="Supprimer" class="btn btn-info pull-center">
+                    </form>   
+                   
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+        <?php
+        }
+        if(isset($_GET['delete'])) {
+                        try {
+                            //Sppression
+                            $id=$_GET['id'];
+                            echo $id;
+                            $val = array ('id' => $_GET['id']);
+                            $bdd -> queryDelete("DELETE FROM medias WHERE id=:id;", $val);
+                        } catch (Exception $e) {
+                          echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
+                        }                
+        }
+        ?>
 
 
         <!-- jQuery UI 1.10.3 -->

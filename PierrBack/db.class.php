@@ -55,9 +55,9 @@ class DB {
                     $req = $this->bdd->prepare($sql);
                     $req->execute($data);
 		} catch (Exception $e) {
-                    return $e->getMessage();
+                    echo('<div class="soft-notif alert">'.$e->getMessage().'</div>');
 		}
-		return "Supprimé avec succès";
+		echo('<div class="soft-notif success">Supprimé avec succès</div>');
         }
 
 	public function queryOne($sql, $data = array()){

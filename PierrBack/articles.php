@@ -259,7 +259,11 @@ $bdd = new DB();
                                             <i class="fa fa-edit"></i>
                                           </a>
                                         </td>
-                                        <td><a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#fullCalModalDel"><i class="fa fa-trash-o"></i></a></td>
+                                         <td>
+                                            <a href="#" class="btn btn-danger" style="float: left" data-dismiss="modal" data-toggle="modal" data-target="#del-<?php echo($article->id); ?>">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php endforeach ?>
                                   </tbody>
@@ -273,7 +277,7 @@ $bdd = new DB();
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
         <?php
-        $articles_edit = $bdd->query(" SELECT * FROM articles;");
+        $articles_edit = $bdd->query("SELECT * FROM articles;");
         foreach ($articles_edit as $article_edit) {
         ?>
           <!-- MODALS !-->
@@ -334,9 +338,42 @@ $bdd = new DB();
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
+          
+        <!-- MODAL SUPPR -->
+         <div class="modal fade" tabindex="-1" role="dialog" id="del-<?php echo($article_edit->id); ?>">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body"> 
+                    <h4 class="modal-delete">Voulez-vous vraiment supprimer l'Article "<?php echo($article_edit->titre)?>" ?</h4>
+                </div>
+                <div class="modal-delete">
+                    <form method="post" action="?delete&id=<?php echo $article_edit->id ?>">
+                        <input type="button" name="annuler" value="Annuler" class="btn btn-default pull-center"  >
+                        <input type="submit" name="supprimer" value="Supprimer" class="btn btn-info pull-center">
+                    </form>   
+                   
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
         <?php
         }
-        ?>
+        if(isset($_GET['delete'])) {
+                        try {
+                            //Sppression
+                            $id=$_GET['id'];
+                            echo $id;
+                            $val = array ('id' => $_GET['id']);
+                            $bdd -> queryDelete("DELETE FROM articles WHERE id=:id;", $val);
+                        } catch (Exception $e) {
+                          echo('<div class="soft-notif alert">Erreur:'.$e.'</div>');
+                        }                
+        }
+        ?>  
+
 
         <!-- jQuery UI 1.10.3 -->
         <script src="js/jquery.js" type="text/javascript"></script>

@@ -50,10 +50,14 @@
               } else {
                 // Si c'est une vidéo, on récupère l'url
                 $video = $_POST['video'];
+                $video_id = explode("?v=", $video);
+                    if (empty($video_id[1])){$video_id = explode("/v/", $video);}
+                $video_id = explode("&", $video_id[1]);
+                $video_id = $video_id[0];
               }
 
               $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video) 
-					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video.'")');
+					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video_id.'")');
                 
                 redirect_to("articles.php?alert=success");
             } else {

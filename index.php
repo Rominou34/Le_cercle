@@ -147,18 +147,28 @@
                      $articles = $bdd->query(" SELECT * FROM articles ORDER BY date DESC LIMIT 2 ");                  
                      
                       foreach ($articles as $article) :
+                     
+                          if ($article->image){    
                      ?>
-                  <div class="col-md-6"><img src="img/img_articles/<?= $article->image; ?>" class="img-responsive" alt="Pierre cika sur un tabouret">
-                  </div>
-                  <div class="col-md-6" id="<?= $article->id; ?>">
-                     <h3 class="titrearticle"><?= $article->titre; ?></h3>
-                     <h6><?= $article->soustitre; ?></h6>
-                     <p class="date"><?= $article->date; ?></p>
-                     <p class ="contenu"><?= $article->texte; ?></p>
-                  </div>
-                  <div class="col-md-12">
-                     <hr>
-                  </div>
+                        <div class="col-md-6"><img src="img/img_articles/<?= $article->image; ?>" class="img-responsive" alt="Pierre cika sur un tabouret">
+                        </div>
+                     <?php 
+                        }else {
+                     ?> 
+                        <div class="col-md-6">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/<?= $article->video; ?>" frameborder="0" allowfullscreen ></iframe>
+                        </div>
+                    <?php } ?>
+                        <div class="col-md-6" id="<?= $article->id; ?>">
+                           <h3 class="titrearticle"><?= $article->titre; ?></h3>
+                           <h6><?= $article->soustitre; ?></h6>
+                           <p class="date"><?= $article->date; ?></p>
+                           <p class ="contenu"><?= $article->texte; ?></p>
+                        </div>
+                        <div class="col-md-12">
+                           <hr>
+                        </div>
+                  
                   <?php endforeach ?>
                </div>
             </div>

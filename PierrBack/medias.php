@@ -105,6 +105,11 @@ session_start();
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  Le média  a bien été modifié.</div>
                  <?php } else if ($_GET['alert'] == 'errorEdit') { ?>
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Le média  n'a pas été modifié.</div>
+                 <?php } else if ($_GET['alert'] == 'errorUploadImg') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'image n'a pas été uploadée.</div>
+                 <?php } else if ($_GET['alert'] == 'errorPubliMedia') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong> Le média n'a pas été mis en ligne.</div>
+   
                <?php } } ?>
                <div class="row">
                   <div class="col-md-6">
@@ -174,6 +179,20 @@ session_start();
                                              <h4 class="modal-title" id="exampleModalLabel">Voulez-vous vraiment supprimer ce media ?</h4>
                                              <input type="hidden" name="num" value="<?= $media->id; ?>">
                                           </div>
+                                          <div class="modal-body">
+                                              <h3><?php echo($media->titre); ?><h3>
+                                              <?php
+                                                if($media->image != NULL) {
+                                                  ?>
+                                                  <img src="../img/img_medias/<?php echo($media->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
+                                                  <?php
+                                                } else {
+                                                  ?>
+
+                                                  <?php
+                                                }
+                                              ?>
+                                          </div>
                                           <div class="modal-footer">
                                              <a href="#" class="btn btn-default" style="float: left" data-dismiss="modal">ANNULER</a>
                                              <input type="submit" name="del_media" value="SUPPRIMER" class="btn btn-danger">
@@ -233,11 +252,7 @@ session_start();
                       <?php
                     }
                   ?>
-
-
-
               </div>
-              <input type="submit" name="modifier" value="Ajouter" class="btn btn-info pull-center">
               </form>
             </div>
             <div class="modal-footer">

@@ -190,7 +190,6 @@
                                              <input type="hidden" name="num" value="<?= $article->id; ?>">
                                           </div>
                                           <div class="modal-body">
-                                            <form method="post" action="modifier_article.php?id=<?php echo($article->id)?>" name="edit_<?php echo($article->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
                                               <h3><?php echo($article->titre); ?><h3>
                                               <h4><?php echo($article->soustitre); ?><h4>
                                               <p><?php echo($article->texte); ?><p>

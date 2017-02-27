@@ -21,8 +21,17 @@
 
 		if(!empty($num)){
 
-			$bdd->queryEvent("DELETE FROM articles WHERE id='".$num."'");
-
+			
+                        $image=$bdd->query("SELECT image FROM articles WHERE id='".$num."'");         
+                        foreach ($image as $img) {
+                            $deleted=unlink("../img/img_articles/".$img->image);
+                        }
+                        if($deleted){
+                            $bdd->queryEvent("DELETE FROM articles WHERE id='".$num."'");
+                        } else {
+                            redirect_to("articles.php?alert=errorDel");
+                        }
+                        
 			redirect_to("articles.php?alert=successDel");
 
 		} else {

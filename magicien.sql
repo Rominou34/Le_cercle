@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 23 Février 2017 à 16:14
+-- Généré le :  Lun 27 Février 2017 à 16:01
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -41,7 +41,7 @@ CREATE TABLE `articles` (
 --
 
 INSERT INTO `articles` (`id`, `titre`, `soustitre`, `texte`, `image`, `video`, `date`) VALUES
-(22, 'rominou', 'romain', 'blabla', 'romain.jpg', '', '2017-02-23 14:02:49');
+(28, 'rominou', 'romain le pd', 'jis', 'romain.jpg', '', '2017-02-27 16:00:40');
 
 -- --------------------------------------------------------
 
@@ -109,13 +109,6 @@ CREATE TABLE `medias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `medias`
---
-
-INSERT INTO `medias` (`id`, `titre`, `image`, `video`, `date`) VALUES
-(2, 'rominou', 'romain.jpg', '', '2017-02-23 13:50:01');
-
---
 -- Index pour les tables exportées
 --
 
@@ -155,7 +148,7 @@ ALTER TABLE `medias`
 -- AUTO_INCREMENT pour la table `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT pour la table `commande`
 --
@@ -165,7 +158,7 @@ ALTER TABLE `commande`
 -- AUTO_INCREMENT pour la table `medias`
 --
 ALTER TABLE `medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Contraintes pour les tables exportées
 --

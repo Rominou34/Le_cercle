@@ -115,7 +115,7 @@ session_start();
                   <div class="col-md-6">
                      <div class="box box-primary">
                         <div class="box-header">
-                           <h3 class="box-title">Ajouter un Article </h3>
+                           <h3 class="box-title">Ajouter un Media </h3>
                         </div>
                         <div class="box-body">
                            <form method="post" action="ajouter_media.php" name="ajouter_media" id="ajouter_media"  enctype="multipart/form-data">

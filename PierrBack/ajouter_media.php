@@ -59,10 +59,10 @@
 									redirect_to("medias.php?alert=errorPubliMedia");
 								}
             } else {
-                redirect_to("articles.php?alert=errorVisu");
+                redirect_to("medias.php?alert=errorVisu");
             }
 	} else {
-            redirect_to("articles.php?alert=errorField");
+            redirect_to("medias.php?alert=errorField");
         }
 
     }

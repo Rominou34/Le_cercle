@@ -189,6 +189,23 @@
                                              <h4 class="modal-title" id="exampleModalLabel">Voulez-vous vraiment supprimer cette article ?</h4>
                                              <input type="hidden" name="num" value="<?= $article->id; ?>">
                                           </div>
+                                          <div class="modal-body">
+                                            <form method="post" action="modifier_article.php?id=<?php echo($article->id)?>" name="edit_<?php echo($article->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
+                                              <h3><?php echo($article->titre); ?><h3>
+                                              <h4><?php echo($article->soustitre); ?><h4>
+                                              <p><?php echo($article->texte); ?><p>
+                                              <?php
+                                                if($article->image != NULL) {
+                                                  ?>
+                                                  <img src="../img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
+                                                  <?php
+                                                } else {
+                                                  ?>
+
+                                                  <?php
+                                                }
+                                              ?>
+                                              </div>
                                           <div class="modal-footer">
                                              <a href="#" class="btn btn-default" style="float: left" data-dismiss="modal">ANNULER</a>
                                              <input type="submit" name="del_article" value="SUPPRIMER" class="btn btn-danger">
@@ -213,63 +230,59 @@
 
       <!-- MODAL DE MODIFICATION !-->
       <?php
-        $articles_edit = $bdd->query(" SELECT * FROM articles;");
-        foreach ($articles_edit as $article_edit) {
+        foreach ($articles as $article) {
       ?>
 
-      <div class="modal fade" tabindex="-1" role="dialog" id="edit-<?php echo($article_edit->id); ?>">
+      <div class="modal fade" tabindex="-1" role="dialog" id="edit-<?php echo($article->id); ?>">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Article #<?php echo($article_edit->id); ?></h4>
+              <h4 class="modal-title">Article #<?php echo($article->id); ?></h4>
             </div>
             <div class="modal-body">
-              <form method="post" action="modifier_article.php?id=<?php echo($article_edit->id)?>" name="edit_<?php echo($article_edit->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
+              <form method="post" action="modifier_article.php?id=<?php echo($article->id)?>" name="edit_<?php echo($article->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
                <div class="form-group">
 
                   <label for="titre">Titre de l'article :</label>
                   <div class="input-group">
-                      <input type="text" class="form-control" name="titre" id="titre" value="<?php echo($article_edit->titre); ?>" required>
+                      <input type="text" class="form-control" name="titre" id="titre" value="<?php echo($article->titre); ?>" required>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                   </div>
 
                   <label for="soustitre">Sous Titre de l'article:</label>
                   <div class="input-group">
-                      <input type="text" class="form-control" name="soustitre" id="soustitre" value="<?php echo($article_edit->soustitre); ?>" required>
+                      <input type="text" class="form-control" name="soustitre" id="soustitre" value="<?php echo($article->soustitre); ?>" required>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                   </div>
 
                   <label for="texte">Contenu de l'article:</label>
                   <div class="input-group">
-                      <textarea class="form-control" rows="5" name="texte" id="texte" required><?php echo($article_edit->texte); ?></textarea>
+                      <textarea class="form-control" rows="5" name="texte" id="texte" required><?php echo($article->texte); ?></textarea>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                   </div>
                   <?php
-                    if($article_edit->image != NULL) {
+                    if($article->image != NULL) {
                       ?>
-                      <img src="../img/img_articles/<?php echo($article_edit->image) ?>" style="max-width: 100%;"></img>
+                      <img src="../img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%;"></img>
                       <?php
                     } else {
                       ?>
                       <label for="video">Vidéo:</label>
                       <div class="input-group">
-                          <input type="text" class="datepicker form-control" name="video" id="video" value="<?php echo($article_edit->video); ?>" required>
+                          <input type="text" class="datepicker form-control" name="video" id="video" value="<?php echo($article->video); ?>" required>
                           <span class="input-group-addon"></span>
                       </div>
                       <?php
                     }
                   ?>
-
-
-
               </div>
               <input type="submit" name="modifier" value="Ajouter" class="btn btn-info pull-center">
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-              <button type="button" class="btn btn-danger" onclick='document.forms["<?php echo("edit_".$article_edit->id)?>"].submit();'>Sauvegarder</button>
+              <button type="button" class="btn btn-danger" onclick='document.forms["<?php echo("edit_".$article->id)?>"].submit();'>Sauvegarder</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

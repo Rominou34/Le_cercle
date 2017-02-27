@@ -277,7 +277,6 @@
                     }
                   ?>
               </div>
-              <input type="submit" name="modifier" value="Ajouter" class="btn btn-info pull-center">
               </form>
             </div>
             <div class="modal-footer">

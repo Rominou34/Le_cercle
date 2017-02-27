@@ -45,7 +45,7 @@
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
                     //echo "Upload de l'image réussi\n";
                 } else {
-                    redirect_to("articles.php?alert=errorUImg");
+                    redirect_to("articles.php?alert=errorUploadImg");
                 }
               } else {
                 // Si c'est une vidéo, on récupère l'url
@@ -56,16 +56,19 @@
                 $video_id = $video_id[0];
               }
 
-              $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video) 
-					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video_id.'")');
-                
-                redirect_to("articles.php?alert=success");
+              $envoye = $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video)
+					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video.'")');
+                if($envoye) {
+									redirect_to("articles.php?alert=success");
+								} else {
+									redirect_to("articles.php?alert=errorPubliArticle");
+								}
             } else {
                 redirect_to("articles.php?alert=errorVisu");
             }
 	} else {
             redirect_to("articles.php?alert=errorField");
         }
-       
+
     }
-?>	
+?>

@@ -28,7 +28,7 @@ $bdd = new DB();
         <!-- Print -->
         <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
 
-        
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -47,7 +47,7 @@ $bdd = new DB();
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">                
+            <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -78,7 +78,7 @@ $bdd = new DB();
                 <!-- /.sidebar -->
             </aside>
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">                
+            <aside class="right-side">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -94,7 +94,9 @@ $bdd = new DB();
                 <!-- Main content -->
                 <section class="content">
 
-                <?php if ($_GET['alert'] == 'errorField') { ?>
+                <?php
+                if(isset($_GET['alert'])) {
+                  if ($_GET['alert'] == 'errorField') { ?>
                     <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur!</strong> Vous n'avez pas remplit tous les champs.</div>
                 <?php } else if ($_GET['alert'] == 'success') { ?>
                     <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès!</strong> L'évenement a bien été ajoutée.</div>
@@ -102,7 +104,7 @@ $bdd = new DB();
                     <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès!</strong>  L'évenement  a été supprimée.</div>
                 <?php } else if ($_GET['alert'] == 'errorDel') { ?>
                     <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur!</strong>  L'évenement  n'a pas été supprimée.</div>
-                <?php } ?>
+                <?php } }?>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -112,7 +114,7 @@ $bdd = new DB();
                                 </div>
                                 <div class="box-body">
                                     <!-- the events -->
-                                    <div id='external-events'> 
+                                    <div id='external-events'>
                                         <p>les évenements apparaissent sous cette forme dans le calendrier: </p>
                                         <div class='external-event bg-blue' style="cursor: default;">Evenement</div>
                                     </div>
@@ -163,12 +165,12 @@ $bdd = new DB();
                             </div>
                         </div><!-- /.col -->
                         <div class="col-md-6">
-                            <div class="box box-primary">                                
+                            <div class="box box-primary">
                                 <div class="box-body no-padding">
                                     <!-- THE CALENDAR -->
                                     <div id="calendar"></div>
                                     <!-- Modal -->
-                                    <?php 
+                                    <?php
                                         $commandes = $bdd->query("SELECT * FROM commande");
                                         foreach ($commandes as $commande):
                                             $date = date_create($commande->date_livraison);
@@ -231,7 +233,7 @@ $bdd = new DB();
                                 </div><!-- /.box-body -->
                             </div><!-- /. box -->
                         </div><!-- /.col -->
-                    </div><!-- /.row -->  
+                    </div><!-- /.row -->
 
 
                 </section><!-- /.content -->
@@ -269,6 +271,13 @@ $bdd = new DB();
         </script>
         <script type="text/javascript" src="js/recap.js"></script>
         <script src="js/print.js" type="text/javascript"></script>
-
+        <script>
+          var alert = document.querySelector(".alert");
+          if(alert) {
+            setTimeout(function() {
+              alert.parentElement.removeChild(alert);
+            }, 3000);
+          }
+        </script>
     </body>
 </html>

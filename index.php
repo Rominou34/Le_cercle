@@ -80,11 +80,7 @@
       <section style="height: 100%;">
          <div class="header-unit">
             <div id="video-container">
-<<<<<<< HEAD
-               <video autoplay  muted class="fillWidth" style="bottom: 0px;">
-=======
                <video autoplay loop muted class="fillWidth" style="bottom: 0px;">
->>>>>>> 58a6192840b0dd24d2ea2a10d3ce77b0e08c8fb7
                   <source src="img/videomagic.mp4" type="video/mp4"/>
                   Votre navigateur ne supporte pas la lecture de vidéo.
                </video>
@@ -104,16 +100,12 @@
                <p>Magicien	depuis	l’adolescence, il est persuadé que	les	arts de	la	scène,	deviennent	réellement	magiques	que	lorsqu’on	les	partage	avec les spectateurs, c’est	pourquoi	tous ces	show	sont	axés sur	l’interactivité.<br>
                 <br>Pierr	Cika	est	né	en	France	à	Montpellier,	le	29	Décembre	1983.A	l’âge	de	15ans,	il	croise	la	route	d’un	magicien	qui	lui	enseigne	une	simple	disparition	de	pièce,	mais qui deviendra	pour lui le	début	d’une	passion,	d’un	métier,	d’une	vie.<br>
                 <br>Autodidacte	c’est	seule face	à	ses	livre	et	vidéo spécialisé	qu’il	apprend	jour	après	jour. Puis	rapidement	on	lui	donne sa chance	de	faire	ses	armes devant un	vrai public	dans	l’hôtel	d’un grand	groupe	hôtelier en	Savoie.	C’est donc aux pieds des pistes	qu’il se perfectionne	et	apprend	la	gestion	des	spectateurs et se met à	étudier	la	psychologie	inhérente au spectacle scénique
-                  <br> 
+                  <br>
                </p>
                <a href="#" class="btn btn-danger"> Découvrir la suite...</a>
             </div>
             <div class="col-md-5">
-<<<<<<< HEAD
-               <div class="imgbio"><img onclick="image()" src="img/Pierr-3-dos.jpg" class="img-responsive" alt="Pierre cika sur un tabouret"></div>
-=======
                <div class="imgbio"><img src="img/cikabio.jpg" class="img-responsive" alt="Pierre cika sur un tabouret"></div>
->>>>>>> 58a6192840b0dd24d2ea2a10d3ce77b0e08c8fb7
             </div>
          </div>
       </section>
@@ -137,23 +129,25 @@
       </section>
       <section id="actu" class="actu">
          <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
                <h2><font color="red">Actualites</font></h2>
                <h3>A ne pas manquer</h3>
                <hr class="rectanglerouge">
                <div class="col-md-12">
                   <?php
-                     $articles = $bdd->query(" SELECT * FROM articles ORDER BY date DESC LIMIT 2 ");                  
-                     
+                     $articles = $bdd->query(" SELECT * FROM articles ORDER BY date DESC LIMIT 2 ");
+
                       foreach ($articles as $article) :
                      ?>
                   <div class="col-md-6"><img src="img/img_articles/<?= $article->image; ?>" class="img-responsive" alt="Pierre cika sur un tabouret">
                   </div>
                   <div class="col-md-6" id="<?= $article->id; ?>">
                      <h3 class="titrearticle"><?= $article->titre; ?></h3>
-                     <h6><?= $article->soustitre; ?></h6>
-                     <p class="date"><?= $article->date; ?></p>
+                     <h4 class="soustitre"><?= $article->soustitre; ?></h4>
+                     <p class="date">
+                       Publié le <?php echo date("d/m/y à G:i:s", strtotime($article->date)); ?>
+                     </p>
                      <p class ="contenu"><?= $article->texte; ?></p>
                   </div>
                   <div class="col-md-12">
@@ -189,8 +183,8 @@
                 function hypnose() {
                     document.getElementById("demo").innerHTML = "Durant	près	de	deux	heures	vous	partagerez	en	groupe,	une	expérience	hors	du	commun.<br><br>	Des	plus	interactif	ce	spectacle	d'hypnose	aborde	cette	discipline	comme	rarement	elle	a	déjà	était	abordé.Endormissement	en	rafale,	modification	des	sens,	de	la	mémoire et	du	comportement,inductions	hypnotiques	liées	à	des	sons	d’ambiancespour	plonger	les	sujets	ainsi	que	les	spectateurs	encore	plus	loin	dans	l’action,	présence	d’une	application	web	pour	repousser	les	limites	de	l’interactivité,	le	tout	saupoudré	de	beaucoup	d’humour	et	réalisé	dans	le	respect	le	plus	total	des	sujets	et	des	spectateurs.<br><br>Tel	est	le	programme	d’Hypnose	Xpérience.";
                 }
-                
-                
+
+
                 </script>
             </div>
             <div class="col-md-2"></div>
@@ -223,29 +217,29 @@
              formatSubmit: 'yyyy-mm-dd',
              hiddenName: true,
          })
-         
+
          var vid = document.getElementById("bgvid");
          var pauseButton = document.querySelector("#polina button");
-         
+
          if (window.matchMedia('(prefers-reduced-motion)').matches) {
          vid.removeAttribute("autoplay");
          vid.pause();
          pauseButton.innerHTML = "Paused";
          }
-         
+
          function vidFade() {
          vid.classList.add("stopfade");
          }
-         
+
          vid.addEventListener('ended', function()
          {
-         // only functional if "loop" is removed 
+         // only functional if "loop" is removed
          vid.pause();
          // to capture IE10
          vidFade();
-         }); 
-         
-         
+         });
+
+
          pauseButton.addEventListener("click", function() {
          vid.classList.toggle("stopfade");
          if (vid.paused) {
@@ -256,8 +250,8 @@
          pauseButton.innerHTML = "Paused";
          }
          })
-         
-         
+
+
       </script>
       <script>
          $(document).ready(function() {
@@ -269,7 +263,7 @@
          event.preventDefault();
          });
          });
-         
+
       </script>
       <script type="text/javascript" src="PierrBack/js/recap.js"></script>
       <script src="PierrBack/js/print.js" type="text/javascript"></script>

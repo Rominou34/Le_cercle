@@ -24,7 +24,6 @@
       <!-- DatePicker -->
       <link href="css/classic.css" rel="stylesheet" type="text/css" />
       <link href="css/classic.date.css" rel="stylesheet" type="text/css" />
-      <link href="cssBack.css" rel="stylesheet" type="text/css" />
       <!-- Print -->
       <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -95,9 +94,9 @@
                   if ($_GET['alert'] == 'errorField') { ?>
                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Vous n'avez pas remplit tous les champs.</div>
                  <?php } else if ($_GET['alert'] == 'errorVisu') { ?>
-                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Veuillez ajouter une image ou une vidéo.</div> 
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Veuillez ajouter une image ou une vidéo.</div>
                  <?php } else if ($_GET['alert'] == 'success') { ?>
-                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'évenement a bien été ajouté.</div>
+                 <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'article a bien été ajouté.</div>
                  <?php } else if ($_GET['alert'] == 'successDel') { ?>
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'article  a bien été supprimé.</div>
                  <?php } else if ($_GET['alert'] == 'errorDel') { ?>
@@ -106,7 +105,12 @@
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  L'article  a bien été modifié.</div>
                  <?php } else if ($_GET['alert'] == 'errorEdit') { ?>
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'article  n'a pas été modifié.</div>
-               <?php } } ?>
+                 <?php } else if ($_GET['alert'] == 'errorUploadImg') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'image n'a pas été uploadée.</div>
+                 <?php } else if ($_GET['alert'] == 'errorPubliArticle') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong> L'article n'a pas été mis en ligne.</div>
+                 <?php
+                 } } ?>
                <div class="row">
                   <div class="col-md-6">
                      <div class="box box-primary">
@@ -292,5 +296,13 @@
       </script>
       <script type="text/javascript" src="js/recap.js"></script>
       <script src="js/print.js" type="text/javascript"></script>
+      <script>
+        var alert = document.querySelector(".alert");
+        if(alert) {
+          setTimeout(function() {
+            alert.parentElement.removeChild(alert);
+          }, 3000);
+        }
+      </script>
    </body>
 </html>

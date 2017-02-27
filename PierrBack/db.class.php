@@ -59,4 +59,5 @@ class DB {
 		return $req->fetch();
 	}
 }
+
 ?>

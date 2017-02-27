@@ -45,23 +45,26 @@
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
                     //echo "Upload de l'image réussi\n";
                 } else {
-                    redirect_to("articles.php?alert=errorUImg");
+                    redirect_to("articles.php?alert=errorUploadImg");
                 }
               } else {
                 // Si c'est une vidéo, on récupère l'url
                 $video = $_POST['video'];
               }
 
-              $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video) 
+              $envoye = $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video)
 					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video.'")');
-                
-                redirect_to("articles.php?alert=success");
+                if($envoye) {
+									redirect_to("articles.php?alert=success");
+								} else {
+									redirect_to("articles.php?alert=errorPubliArticle");
+								}
             } else {
                 redirect_to("articles.php?alert=errorVisu");
             }
 	} else {
             redirect_to("articles.php?alert=errorField");
         }
-       
+
     }
-?>	
+?>

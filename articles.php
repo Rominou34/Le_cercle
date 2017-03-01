@@ -53,11 +53,11 @@
 		<div class="menu-wrap">
 			<h1 class="logo"><a href="index.html#home">Pierr Cika</a></h1>
 			<i class="fa fa-times menu-close"></i>
-			<a href="#lecole" class="smoothScroll">Ecole</a>
-			<a href="#actus" class="smoothScroll">Actualité</a>
-			<a href="#spectacle" class="smoothScroll">Spectacles</a>
-			<a href="#services" class="smoothScroll">Multimédia</a>
-			<a href="#contact" class="smoothScroll">Contact</a>
+			<a href="index.php#lecole" class="smoothScroll">Ecole</a>
+			<a href="index.php#actus" class="smoothScroll">Actualité</a>
+			<a href="index.php#spectacle" class="smoothScroll">Spectacles</a>
+			<a href="index.php#services" class="smoothScroll">Multimédia</a>
+			<a href="index.php#contact" class="smoothScroll">Contact</a>
 			<a href="#"><i class="fa fa-facebook"></i></a>
 			<a href="#"><i class="fa fa-twitter"></i></a>
 			<a href="#"><i class="fa fa-dribbble"></i></a>

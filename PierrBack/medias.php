@@ -78,7 +78,7 @@ session_start();
          <!-- Right side column. Contains the navbar and content of the page -->
          <aside class="right-side">
             <!-- Content Header (Page header) -->
-            
+
             <section class="content-header">
                <h1>
                   Médias
@@ -109,7 +109,7 @@ session_start();
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'image n'a pas été uploadée.</div>
                  <?php } else if ($_GET['alert'] == 'errorPubliMedia') { ?>
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong> Le média n'a pas été mis en ligne.</div>
-   
+
                <?php } } ?>
                <div class="row">
                   <div class="col-md-6">
@@ -126,7 +126,7 @@ session_start();
                     </div><!-- /. box -->
                      <div class="box box-primary">
                         <div class="box-header">
-                           <h3 class="box-title">Ajouter un Article </h3>
+                           <h3 class="box-title">Ajouter un Media </h3>
                         </div>
                         <div class="box-body">
                            <form method="post" action="ajouter_media.php" name="ajouter_media" id="ajouter_media"  enctype="multipart/form-data">
@@ -195,7 +195,7 @@ session_start();
                                               <?php
                                                 if($media->image != NULL) {
                                                   ?>
-                                                  <img src="../assets/img/img_medias/"<?php echo($media->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
+                                                  <img src="../assets/img/img_medias/<?php echo($media->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
                                                   <?php
                                                 } else {
                                                   ?>

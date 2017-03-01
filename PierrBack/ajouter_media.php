@@ -23,7 +23,7 @@
               // Si c'est une photo, on la met sur le serveur
               if(!empty($_FILES['image']['name'])) {
                    // Verifie si l'image est valide
-                $target_dir = "../assets/img/img_medias/";
+									 $target_dir = "../assets/img/img_medias/";
                 $target_file = $target_dir . basename($_FILES["image"]["name"]);
                 $image_name = basename($_FILES["image"]["name"]);
                 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -66,4 +66,3 @@
 
     }
 ?>
-

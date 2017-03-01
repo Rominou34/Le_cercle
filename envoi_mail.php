@@ -12,8 +12,6 @@ function redirect_to($url)
 */
 // destinataire est votre adresse mail. Pour envoyer à plusieurs à la fois, séparez-les par une virgule
 $destinataire = 'arnaud.romain34@gmail.com';
-// copie ? (envoie une copie au visiteur)
-$copie = 'oui';
 // Messages de confirmation du mail
 $message_envoye = "Votre message nous est bien parvenu !";
 $message_non_envoye = "L'envoi du mail a échoué, veuillez réessayer SVP.";
@@ -50,6 +48,7 @@ $nom     = (isset($_POST['nom']))     ? Rec($_POST['nom'])     : '';
 $email   = (isset($_POST['email']))   ? Rec($_POST['email'])   : '';
 $objet   = (isset($_POST['objet']))   ? Rec($_POST['objet'])   : '';
 $message = (isset($_POST['message'])) ? Rec($_POST['message']) : '';
+$copie   = (isset($_POST['copie']))   ? $copie = 'oui'         : '';
 // On va vérifier les variables et l'email ...
 $email = (IsEmail($email)) ? $email : ''; // soit l'email est vide si erroné, soit il vaut l'email entré
 if (($nom != '') && ($email != '') && ($message != ''))
@@ -59,7 +58,7 @@ if (($nom != '') && ($email != '') && ($message != ''))
 	//$headers .= 'Reply-To: '.$email. "\r\n" ;
 	//$headers .= 'X-Mailer:PHP/'.phpversion();
 	// envoyer une copie au visiteur ?
-	if ($copie)
+	if ($copie == 'oui')
 	{
 		$cible = $destinataire.';'.$email;
 	}
@@ -84,7 +83,7 @@ if (($nom != '') && ($email != '') && ($message != ''))
 		if (mail($email_destinataire, $objet, $message, $headers))
 			$num_emails++;
 	}
-	if ((($copie) && ($num_emails == 2)) || (($copie == false) && ($num_emails == 1)))
+	if ((($copie == 'oui') && ($num_emails == 2)) || (($copie == '') && ($num_emails == 1)))
 	{
     redirect_to('index.php?alert=envoye');
 	}

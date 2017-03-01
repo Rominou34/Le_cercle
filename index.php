@@ -419,6 +419,8 @@
                           </select><br>
 					    <label for="exampleInputText1">Message</label>
 					    <textarea class="form-control" name="message" rows="3"></textarea>
+              <label for="copie">Souhaitez-vous recevoir une copie du mail ?</label>
+              <input type="checkbox" name="copie" value="oui" />
 					  </div>
 					  <button type="submit" class="btn btn-default">Envoyer</button>
 					</form>

@@ -405,7 +405,7 @@
 				</div>
 
 				<div class="col-lg-6">
-					<form role="form">
+					<form role="form"action="envoi_mail.php" method="post">
 					  <div class="form-group">
 					    <label for="exampleInputName1">Votre Nom </label>
 					    <input type="text" class="form-control" name="nom" id="exampleInputEmail1" placeholder="Entrez un nom">

@@ -408,7 +408,7 @@
 					<form role="form">
 					  <div class="form-group">
 					    <label for="exampleInputName1">Votre Nom </label>
-					    <input type="email" class="form-control" name="nom" id="exampleInputEmail1" placeholder="Entrez un nom">
+					    <input type="text" class="form-control" name="nom" id="exampleInputEmail1" placeholder="Entrez un nom">
 					    <label for="exampleInputEmail1">Email address</label>
 					    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Entrez une adresse e-mail">
                         <label for="exampleInputobject1">Objet </label><br>

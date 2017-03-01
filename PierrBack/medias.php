@@ -105,9 +105,25 @@ session_start();
                  <div class="alert alert-success fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Succès !</strong>  Le média  a bien été modifié.</div>
                  <?php } else if ($_GET['alert'] == 'errorEdit') { ?>
                  <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  Le média  n'a pas été modifié.</div>
+                 <?php } else if ($_GET['alert'] == 'errorUploadImg') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong>  L'image n'a pas été uploadée.</div>
+                 <?php } else if ($_GET['alert'] == 'errorPubliMedia') { ?>
+                 <div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erreur !</strong> Le média n'a pas été mis en ligne.</div>
+   
                <?php } } ?>
                <div class="row">
                   <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h4 class="box-title">Aide ajout médias:</h4>
+                        </div>
+                        <div class="box-body">
+                            <!-- the events -->
+                            <div id='external-events'>
+                                <p>Il est conseiller d'utiliser une image de taille <strong>400x273</strong> px pour un affichage optimal </p>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /. box -->
                      <div class="box box-primary">
                         <div class="box-header">
                            <h3 class="box-title">Ajouter un Article </h3>
@@ -115,7 +131,7 @@ session_start();
                         <div class="box-body">
                            <form method="post" action="ajouter_media.php" name="ajouter_media" id="ajouter_media"  enctype="multipart/form-data">
                               <div class="form-group">
-                                 <label for="titre">Titre du média</label>
+                                 <label for="titre">Lien / Titre du média</label>
                                  <div class="input-group">
                                     <input type="text" class="form-control" name="titre" id="titre" placeholder="Titre" required>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
@@ -174,6 +190,20 @@ session_start();
                                              <h4 class="modal-title" id="exampleModalLabel">Voulez-vous vraiment supprimer ce media ?</h4>
                                              <input type="hidden" name="num" value="<?= $media->id; ?>">
                                           </div>
+                                          <div class="modal-body">
+                                              <h3><?php echo($media->titre); ?><h3>
+                                              <?php
+                                                if($media->image != NULL) {
+                                                  ?>
+                                                  <img src="../assets/img/img_medias/"<?php echo($media->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
+                                                  <?php
+                                                } else {
+                                                  ?>
+
+                                                  <?php
+                                                }
+                                              ?>
+                                          </div>
                                           <div class="modal-footer">
                                              <a href="#" class="btn btn-default" style="float: left" data-dismiss="modal">ANNULER</a>
                                              <input type="submit" name="del_media" value="SUPPRIMER" class="btn btn-danger">
@@ -221,7 +251,7 @@ session_start();
                   <?php
                     if($media_edit->image != NULL) {
                       ?>
-                      <img src="../img/img_medias/<?php echo($media_edit->image) ?>" style="max-width: 100%;"></img>
+                      <img src="../assets/img/img_medias/<?php echo($media_edit->image) ?>" style="max-width: 100%;"></img>
                       <?php
                     } else {
                       ?>
@@ -233,11 +263,7 @@ session_start();
                       <?php
                     }
                   ?>
-
-
-
               </div>
-              <input type="submit" name="modifier" value="Ajouter" class="btn btn-info pull-center">
               </form>
             </div>
             <div class="modal-footer">

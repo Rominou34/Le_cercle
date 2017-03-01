@@ -190,14 +190,13 @@
                                              <input type="hidden" name="num" value="<?= $article->id; ?>">
                                           </div>
                                           <div class="modal-body">
-                                            <form method="post" action="modifier_article.php?id=<?php echo($article->id)?>" name="edit_<?php echo($article->id) ?>" id="ajouter_article"  enctype="multipart/form-data">
                                               <h3><?php echo($article->titre); ?><h3>
                                               <h4><?php echo($article->soustitre); ?><h4>
                                               <p><?php echo($article->texte); ?><p>
                                               <?php
                                                 if($article->image != NULL) {
                                                   ?>
-                                                  <img src="../img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
+                                                  <img src="../assets/img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%; display: block; margin: auto;"></img>
                                                   <?php
                                                 } else {
                                                   ?>
@@ -264,7 +263,7 @@
                   <?php
                     if($article->image != NULL) {
                       ?>
-                      <img src="../img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%;"></img>
+                      <img src="../assets/img/img_articles/<?php echo($article->image) ?>" style="max-width: 100%;"></img>
                       <?php
                     } else {
                       ?>
@@ -277,7 +276,6 @@
                     }
                   ?>
               </div>
-              <input type="submit" name="modifier" value="Ajouter" class="btn btn-info pull-center">
               </form>
             </div>
             <div class="modal-footer">

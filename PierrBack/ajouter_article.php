@@ -57,7 +57,7 @@
               }
 
               $envoye = $bdd->queryEvent('INSERT INTO articles(titre, soustitre, texte, image, video)
-					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video.'")');
+					VALUES ("'.$titre.'","'.$soustitre.'","'.$texte.'","'.$lien_photo.'","'.$video_id.'")');
                 if($envoye) {
 									redirect_to("articles.php?alert=success");
 								} else {
